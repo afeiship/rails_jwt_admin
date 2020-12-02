@@ -1,4 +1,10 @@
-POST http://localhost:3000/authentication
+### get token
+POST http://localhost:3000/rails_jwt_admin/authentication
 Content-Type: application/json
 
-{ "username":"json", "password": "123456"}
+{ "username":"json", "password": "12345"}
+
+
+### get profile
+GET http://localhost:3000/rails_jwt_admin/profile
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.nqJUQg1hdck825a1u6o6eurNFFKsD9EPGwdm-ynHUrA

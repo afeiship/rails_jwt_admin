@@ -1,4 +1,4 @@
 RailsJwtAdmin::Engine.routes.draw do
-  resources :users, only: :index
+  get "profile", to: "users#profile"
   resources :authentication, only: :create
 end
