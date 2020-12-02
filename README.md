@@ -17,6 +17,16 @@ rails g rails_jwt_admin:install
 rake db:migrate
 ```
 
+## seed
+```rb
+RailsJwtAdmin::User.create(
+    username: "admin", 
+    email: "example@qq.com", 
+    password: "123123", 
+    password_confirmation: "123123"
+)
+```
+
 ## resources
 - https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
 - https://guides.rubyonrails.org/engines.html
