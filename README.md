@@ -25,3 +25,4 @@ rake db:migrate
 - https://www.pluralsight.com/guides/token-based-authentication-with-ruby-on-rails-5-api
 - https://github.com/jwt/ruby-jwt
 - https://github.com/afeiship/rails-module-jwt
+- https://github.com/afeiship/rails_admin_users
