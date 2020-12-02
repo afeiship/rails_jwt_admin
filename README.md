@@ -6,9 +6,17 @@
 # gem
 gem install 'rails_jwt_admin'
 
-# rails - bundle install
+# rails 
+# 1. add gen & bundle install
 gem 'rails_jwt_admin'
+
+# 2. install admin
+rails g rails_jwt_admin:install
+
+# 3. check talbe & rake db:migrate
+rake db:migrate
 ```
+
 
 ## resources
 - https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
