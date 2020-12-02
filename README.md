@@ -3,10 +3,6 @@
 
 ## installation
 ```shell
-# gem
-gem install 'rails_jwt_admin'
-
-# rails 
 # 1. add gen & bundle install
 gem 'rails_jwt_admin'
 
