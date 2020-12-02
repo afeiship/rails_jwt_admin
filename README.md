@@ -17,7 +17,6 @@ rails g rails_jwt_admin:install
 rake db:migrate
 ```
 
-
 ## resources
 - https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
 - https://guides.rubyonrails.org/engines.html
