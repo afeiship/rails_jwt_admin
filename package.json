@@ -1,0 +1,26 @@
+{
+  "name": "rails_jwt_admin",
+  "version": "1.0.0",
+  "description": "Jwt for rails admin.",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "clean": "rm -rf *.gem",
+    "build": "gem build *.gemspec",
+    "pubpush": "gem push *.gem"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/afeiship/rails_jwt_admin.git"
+  },
+  "keywords": [],
+  "author": "afeiship",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/afeiship/rails_jwt_admin/issues"
+  },
+  "homepage": "https://github.com/afeiship/rails_jwt_admin#readme"
+}
