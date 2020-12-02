@@ -13,7 +13,7 @@ gem 'rails_jwt_admin'
 # 2. install admin
 rails g rails_jwt_admin:install
 
-# 3. check talbe & rake db:migrate
+# 3. check table & rake db:migrate
 rake db:migrate
 ```
 
