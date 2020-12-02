@@ -9,8 +9,7 @@
   },
   "scripts": {
     "dev":"cd test/dummy && rails server",
-    "clean": "rm -rf *.gem",
-    "build": "gem build *.gemspec",
+    "build": "rm -rf *.gem && gem build *.gemspec",
     "pubpush": "gem push *.gem"
   },
   "repository": {
