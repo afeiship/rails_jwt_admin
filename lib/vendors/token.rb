@@ -1,5 +1,7 @@
+require "rails_jwt_admin/engine"
+
 module RailsJwtAdmin
-  class Token < ApplicationRecord
+  class Token
     def self.encode(payload)
       JWT.encode(payload, Rails.application.secrets.secret_key_base)
     end
