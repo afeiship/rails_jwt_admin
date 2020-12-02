@@ -13,7 +13,7 @@ module RailsJwtAdmin
 
     private
 
-    def render_failed(messages = ["验证失败"])
+    def render_failed(messages = ["Authenticate failed."])
       render json: { errors: messages }, status: :unauthorized
     end
 
