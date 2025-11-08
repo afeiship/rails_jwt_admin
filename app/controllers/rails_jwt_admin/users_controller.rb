@@ -6,7 +6,8 @@ module RailsJwtAdmin
 
     # 取当前用户信息
     def me
-      render json: current_user.to_json
+      data = current_user.as_json(only: [:id, :username, :email])
+      ok(data: data)
     end
   end
 end

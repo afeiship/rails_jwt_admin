@@ -1,65 +1,124 @@
+```markdown
 # RailsJwtAdmin
-> Jwt for rails admin.
+> JWT-based authentication system for Rails admin panel.
 
-## Usage
-- EDITOR=vim bin/rails credentials:edit
-- add jwt_secret: "your_secret_key"
+## Features
+- JWT token-based authentication
+- Admin user management
+- Secure API responses with consistent format
+- Easy installation and configuration
 
 ## Installation
-```shell
-# 1. add gen & bundle install
+
+1. Add the required gems to your Gemfile:
+```ruby
 gem "jwt"
 gem "bcrypt"
 gem "rails_warp"
-
-gem 'rails_jwt_admin'
-
-# 2. install admin
-rails g rails_jwt_admin:install
-
-# 3. check table & rake db:migrate
-rake db:migrate
+gem "rails_jwt_admin"
 ```
 
-## Seed
-```rb
+2. Run bundle install:
+```bash
+bundle install
+```
+
+3. Install the admin:
+```bash
+rails g rails_jwt_admin:install
+```
+
+4. Run database migration:
+```bash
+rails db:migrate
+```
+
+## Configuration
+
+1. Generate and edit your application credentials:
+```bash
+EDITOR=vim rails credentials:edit
+```
+
+2. Add your JWT secret key:
+```yaml
+jwt_secret: "your_secret_key_here"
+```
+
+## Setup Admin User
+
+Create an initial admin user:
+```ruby
 RailsJwtAdmin::User.create(
-    username: "admin", 
-    email: "example@qq.com", 
-    password: "123123", 
-    password_confirmation: "123123"
+  username: "admin", 
+  email: "admin@example.com", 
+  password: "your_secure_password", 
+  password_confirmation: "your_secure_password"
 )
 ```
 
-## response
-```json5
-// success
+## API Usage
+- /rails_jwt_admin/authentication
+- /rails_jwt_admin/me
+
+### Authentication
+Send POST request to `/rails_jwt_admin/authentication` with:
+- `username` - Admin username
+- `password` - Admin password
+
+### Response Format
+Successful authentication returns:
+```json
 {
   "success": true,
   "code": 200,
   "message": null,
   "data": {
-    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.usIb4_TkXGDommzaBiE6rFjMmvEJmxv5wmt45MqKc9E"
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ..."
   }
 }
 
-// failed
+// me
+{
+  "success": true,
+  "code": 200,
+  "message": null,
+  "data": {
+    "id": 1,
+    "username": "admin",
+    "email": "example@qq.com"
+  }
+}
+```
+
+Failed authentication returns:
+```json
 {
   "success": false,
   "code": 401,
-  "message": "Authenticate failed.",
+  "message": "Authentication failed",
   "data": null
 }
 ```
 
-## Resources
-- https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
-- https://guides.rubyonrails.org/engines.html
-- https://www.jianshu.com/p/56467f890516
-- https://www.pluralsight.com/guides/token-based-authentication-with-ruby-on-rails-5-api
-- https://github.com/jwt/ruby-jwt
-- https://github.com/afeiship/rails-module-jwt
-- https://github.com/afeiship/rails_admin_users
+### Authorization
+Include the token in your requests using the Authorization header:
+```
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ...
+```
+
+## Security Considerations
+
+- Use a strong, unique JWT secret key
+- Consider token expiration times for security
+- Store sensitive credentials using Rails encrypted credentials
+- Regularly update dependencies for security patches
+
+## Development Resources
+- [Rails Engines Guide](https://guides.rubyonrails.org/engines.html)
+- [JWT Ruby Implementation](https://github.com/jwt/ruby-jwt)
+- [Rails Security Guide](https://guides.rubyonrails.org/security.html)
 
 ## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+This gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+```

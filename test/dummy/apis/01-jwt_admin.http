@@ -6,4 +6,4 @@ content-type: application/json
 
 ### get me
 GET http://localhost:3000/rails_jwt_admin/me
-Authorization: {{ token }}
+Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.usIb4_TkXGDommzaBiE6rFjMmvEJmxv5wmt45MqKc9E
