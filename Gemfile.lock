@@ -5,11 +5,10 @@ PATH
       rails (>= 8.1.1)
 
 PATH
-  remote: /Users/aric/github/rails_api_base
+  remote: /Users/aric/github/rails_warp
   specs:
-    rails_api_base (1.0.8)
-      blueprinter
-      rails (>= 6.0)
+    rails_warp (1.0.1)
+      jbuilder (>= 2.5)
 
 GEM
   remote: https://rubygems.org/
@@ -92,7 +91,6 @@ GEM
     base64 (0.3.0)
     bcrypt (3.1.20)
     bigdecimal (3.3.1)
-    blueprinter (1.2.1)
     builder (3.3.0)
     concurrent-ruby (1.3.5)
     connection_pool (2.5.4)
@@ -110,6 +108,9 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    jbuilder (2.14.1)
+      actionview (>= 7.0.0)
+      activesupport (>= 7.0.0)
     json (2.16.0)
     jwt (3.1.2)
       base64
@@ -261,8 +262,8 @@ DEPENDENCIES
   jwt
   propshaft
   puma
-  rails_api_base!
   rails_jwt_admin!
+  rails_warp!
   rubocop-rails-omakase
   sqlite3
 

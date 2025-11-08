@@ -14,7 +14,8 @@ module RailsJwtAdmin
     private
 
     def render_failed(messages = ["Authenticate failed."])
-      render json: { errors: messages }, status: :unauthorized
+      # render json: { errors: messages }, status: :unauthorized
+      fail(errors: messages, code: 401)
     end
 
     def http_token

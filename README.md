@@ -10,6 +10,7 @@
 # 1. add gen & bundle install
 gem "jwt"
 gem "bcrypt"
+gem "rails_warp"
 
 gem 'rails_jwt_admin'
 

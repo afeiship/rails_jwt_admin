@@ -18,4 +18,4 @@ gem "rubocop-rails-omakase", require: false
 gem "jwt"
 gem "bcrypt"
 
-gem "rails_api_base", path: File.expand_path('~/github/rails_api_base')
+gem "rails_warp", path: File.expand_path('~/github/rails_warp')
