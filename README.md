@@ -31,6 +31,27 @@ RailsJwtAdmin::User.create(
 )
 ```
 
+## response
+```json5
+// success
+{
+  "success": true,
+  "code": 200,
+  "message": null,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.usIb4_TkXGDommzaBiE6rFjMmvEJmxv5wmt45MqKc9E"
+  }
+}
+
+// failed
+{
+  "success": false,
+  "code": 401,
+  "message": "Authenticate failed.",
+  "data": null
+}
+```
+
 ## Resources
 - https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
 - https://guides.rubyonrails.org/engines.html
