@@ -58,11 +58,11 @@ RailsJwtAdmin::User.create(
 ```
 
 ## API Usage
-- /rails_jwt_admin/authentication
-- /rails_jwt_admin/me
+- POST `/rails_jwt_admin/auth` - Authenticate and get token
+- GET `/rails_jwt_admin/me` - Get current user info
 
 ### Authentication
-Send POST request to `/rails_jwt_admin/authentication` with:
+Send POST request to `/rails_jwt_admin/auth` with:
 - `username` - Admin username
 - `password` - Admin password
 
@@ -77,8 +77,10 @@ Successful authentication returns:
     "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ..."
   }
 }
+```
 
-// me
+Get current user returns:
+```json
 {
   "success": true,
   "code": 200,
@@ -113,6 +115,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ...
 - Consider token expiration times for security
 - Store sensitive credentials using Rails encrypted credentials
 - Regularly update dependencies for security patches
+- Follow Rails security best practices for session management and CSRF protection
 
 ## Development Resources
 - [Rails Engines Guide](https://guides.rubyonrails.org/engines.html)
