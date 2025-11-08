@@ -1,7 +1,11 @@
-# rails_jwt_admin
+# RailsJwtAdmin
 > Jwt for rails admin.
 
-## installation
+## Usage
+- EDITOR=vim bin/rails credentials:edit
+- add jwt_secret: "your_secret_key"
+
+## Installation
 ```shell
 # 1. add gen & bundle install
 gem 'rails_jwt_admin'
@@ -13,7 +17,7 @@ rails g rails_jwt_admin:install
 rake db:migrate
 ```
 
-## seed
+## Seed
 ```rb
 RailsJwtAdmin::User.create(
     username: "admin", 
@@ -23,7 +27,7 @@ RailsJwtAdmin::User.create(
 )
 ```
 
-## resources
+## Resources
 - https://edgeapi.rubyonrails.org/classes/Rails/Engine.html
 - https://guides.rubyonrails.org/engines.html
 - https://www.jianshu.com/p/56467f890516
@@ -31,3 +35,6 @@ RailsJwtAdmin::User.create(
 - https://github.com/jwt/ruby-jwt
 - https://github.com/afeiship/rails-module-jwt
 - https://github.com/afeiship/rails_admin_users
+
+## License
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
