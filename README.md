@@ -8,6 +8,9 @@
 ## Installation
 ```shell
 # 1. add gen & bundle install
+gem "jwt"
+gem "bcrypt"
+
 gem 'rails_jwt_admin'
 
 # 2. install admin

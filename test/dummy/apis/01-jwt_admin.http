@@ -1,0 +1,9 @@
+### get token(login)
+POST http://localhost:3000/rails_jwt_admin/authentication
+content-type: application/json
+
+{ "username":"admin", "password": "123123"}
+
+### get me
+GET http://localhost:3000/rails_jwt_admin/me
+Authorization: {{ token }}

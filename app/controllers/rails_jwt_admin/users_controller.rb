@@ -4,7 +4,8 @@ module RailsJwtAdmin
   class UsersController < ApplicationController
     before_action :authenticate!
 
-    def profile
+    # 取当前用户信息
+    def me
       render json: current_user.to_json
     end
   end
