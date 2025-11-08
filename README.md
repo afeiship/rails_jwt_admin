@@ -1,4 +1,3 @@
-```markdown
 # RailsJwtAdmin
 > JWT-based authentication system for Rails admin panel.
 
@@ -124,4 +123,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ...
 
 ## License
 This gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
-```
