@@ -9,10 +9,13 @@
 
 ## Installation
 
-1. Add the required gems to your Gemfile:
+1. Add the required gems to your Gemfile(If not already added):
 ```ruby
+# decode/encode methods
 gem "jwt"
 gem "bcrypt"
+
+# normalize response
 gem "rails_warp"
 gem "rails_jwt_admin"
 ```
