@@ -1,4 +1,4 @@
 RailsJwtAdmin::Engine.routes.draw do
+  post "auth", to: "authentication#create"
   get "me", to: "users#me"
-  resources :auth, only: :create
 end

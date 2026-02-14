@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_08_025006) do
+ActiveRecord::Schema[8.1].define(version: 2020_12_02_013006) do
   create_table "rails_jwt_admin_users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", null: false

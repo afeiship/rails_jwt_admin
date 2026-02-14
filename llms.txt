@@ -1,0 +1,276 @@
+# RailsJwtAdmin
+> RailsJwtAdmin is a Rails Engine gem that provides JWT-based authentication for admin panels. It offers a complete authentication solution with user management, secure token handling, and consistent API responses using the `rails_warp` gem for normalized responses.
+
+The gem is designed as a mountable Rails Engine, making it easy to integrate into any Rails 7+ API application. It includes database migrations, controllers, models, and routes out of the box.
+
+**Important notes for agents:**
+- This is a Rails Engine gem, not a standalone application
+- All routes are namespaced under `/rails_jwt_admin`
+- Requires `jwt`, `bcrypt`, and `rails_warp` gems as dependencies
+- JWT secret must be configured in Rails credentials
+- Uses `rails_warp` gem's `ok()` and `fail()` methods for consistent API responses
+
+## Documentation
+- [README](README.md): Complete installation guide, API usage, and configuration instructions
+- [MIT-LICENSE](MIT-LICENSE): License information for the gem
+
+## Key Features
+- **JWT Authentication**: Secure token-based authentication with HS256 algorithm
+- **User Management**: Built-in admin user model with username/email/password
+- **Token Handling**: Encode/decode JWT tokens with configurable secret key
+- **Consistent Responses**: Uses `rails_warp` gem for standardized API response format
+- **Mountable Engine**: Easy integration as a Rails Engine
+- **Secure Passwords**: Bcrypt encryption for password storage
+- **Authentication Helper**: `authenticate!` method for protecting controller actions
+
+## Installation
+
+### 1. Add Gems to Gemfile
+```ruby
+# decode/encode methods
+gem "jwt"
+gem "bcrypt"
+
+# normalize response
+gem "rails_warp"
+gem "rails_jwt_admin"
+```
+
+### 2. Install Dependencies
+```bash
+bundle install
+```
+
+### 3. Run Install Generator
+```bash
+rails g rails_jwt_admin:install
+```
+
+### 4. Run Database Migrations
+```bash
+rails db:migrate
+```
+
+## Configuration
+
+### JWT Secret Key
+Set your JWT secret in Rails credentials:
+```bash
+EDITOR=vim rails credentials:edit
+```
+
+Add to credentials:
+```yaml
+jwt_secret: "your_secret_key_here"
+```
+
+## Core Components
+
+### Models
+- **RailsJwtAdmin::User**: Admin user model
+  - Fields: `id`, `username`, `email`, `password` (encrypted), `password_confirmation`
+  - Uses bcrypt for password encryption
+  - Has `token` method to generate JWT tokens
+  - Located at: `app/models/rails_jwt_admin/user.rb`
+
+### Controllers
+- **RailsJwtAdmin::ApplicationController**: Base controller for authentication
+  - `authenticate!`: Protects actions by validating JWT token
+  - `current_user`: Returns authenticated user instance
+  - `token?`: Checks if token is present and valid
+  - Located at: `app/controllers/rails_jwt_admin/application_controller.rb`
+
+- **RailsJwtAdmin::AuthenticationController**: Handles login requests
+  - `POST /rails_jwt_admin/auth`: Authenticate and receive JWT token
+  - Located at: `app/controllers/rails_jwt_admin/authentication_controller.rb`
+
+- **RailsJwtAdmin::UsersController**: User profile endpoint
+  - `GET /rails_jwt_admin/me`: Get current authenticated user info
+  - Located at: `app/controllers/rails_jwt_admin/users_controller.rb`
+
+### Libraries
+- **RailsJwtAdmin::Token**: JWT token utility class
+  - `Token.encode(payload)`: Encode JWT token
+  - `Token.decode(token)`: Decode and verify JWT token
+  - `Token.secret_key`: Returns configured JWT secret
+  - Located at: `lib/vendors/token.rb`
+
+### Routes
+All routes are prefixed with `/rails_jwt_admin`:
+
+| Method | Path | Action | Auth Required |
+|--------|------|--------|---------------|
+| POST | `/rails_jwt_admin/auth` | AuthenticationController#create | No |
+| GET | `/rails_jwt_admin/me` | UsersController#me | Yes |
+
+## API Usage
+
+### Authentication
+Send POST request to `/rails_jwt_admin/auth`:
+```bash
+curl -X POST http://localhost:3000/rails_jwt_admin/auth \
+  -H "Content-Type: application/json" \
+  -d '{"username": "admin", "password": "your_password"}'
+```
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "code": 200,
+  "message": null,
+  "data": {
+    "token": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ..."
+  }
+}
+```
+
+**Failed Response** (401):
+```json
+{
+  "success": false,
+  "code": 401,
+  "message": "Username or password error.",
+  "data": null
+}
+```
+
+### Get Current User
+Send GET request to `/rails_jwt_admin/me` with Authorization header:
+```bash
+curl -X GET http://localhost:3000/rails_jwt_admin/me \
+  -H "Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ..."
+```
+
+**Success Response** (200):
+```json
+{
+  "success": true,
+  "code": 200,
+  "message": null,
+  "data": {
+    "id": 1,
+    "username": "admin",
+    "email": "admin@example.com"
+  }
+}
+```
+
+### Using in Your Controllers
+To protect your own controller actions:
+
+```ruby
+class ApiController < ActionController::API
+  include RailsJwtAdmin::ApplicationController
+
+  before_action :authenticate!
+
+  def protected_action
+    # Access current_user
+    render json: { user: current_user.username }
+  end
+end
+```
+
+## Database Schema
+Migration file: `db/migrate/20201202013006_create_rails_jwt_admin_users.rb`
+
+**rails_jwt_admin_users table:**
+- `id` (primary key)
+- `username` (string, indexed)
+- `email` (string)
+- `password_digest` (string) - bcrypt encrypted password
+
+## Creating Admin Users
+Use Rails console or seeds to create initial admin:
+
+```ruby
+# Via Rails console
+RailsJwtAdmin::User.create(
+  username: "admin",
+  email: "admin@example.com",
+  password: "your_secure_password",
+  password_confirmation: "your_secure_password"
+)
+
+# Or via seeds file
+# db/seeds.rb
+RailsJwtAdmin::User.create!(
+  username: "admin",
+  email: "admin@example.com",
+  password: "SecurePass123!",
+  password_confirmation: "SecurePass123!"
+)
+```
+
+## Security Best Practices
+
+1. **Strong JWT Secret**: Use a cryptographically secure random string (32+ characters)
+   ```ruby
+   RailsJwtAdmin::Token.secret_key # Must be configured
+   ```
+
+2. **Token Expiration**: Consider implementing token expiration in the payload
+   ```ruby
+   Token.encode({ user_id: user.id, exp: 24.hours.from_now.to_i })
+   ```
+
+3. **HTTPS Only**: Always use HTTPS in production to prevent token interception
+
+4. **Credential Storage**: Store JWT secret in Rails encrypted credentials, not in code
+
+5. **Password Requirements**: Enforce strong password policies for admin users
+
+6. **Regular Updates**: Keep dependencies updated for security patches
+
+## Dependencies
+- `jwt`: Ruby implementation of JSON Web Tokens
+- `bcrypt`: Password hashing algorithm
+- `rails_warp`: Provides `ok()` and `fail()` response helpers
+- Rails 7+
+
+## File Structure
+```
+rails_jwt_admin/
+├── app/
+│   ├── controllers/
+│   │   └── rails_jwt_admin/
+│   │       ├── application_controller.rb      # Base auth controller
+│   │       ├── authentication_controller.rb   # Login endpoint
+│   │       └── users_controller.rb            # User profile endpoint
+│   └── models/
+│       └── rails_jwt_admin/
+│           └── user.rb                         # User model
+├── config/
+│   └── routes.rb                              # Engine routes
+├── db/
+│   └── migrate/
+│       └── 20201202013006_create_rails_jwt_admin_users.rb
+├── lib/
+│   ├── generators/
+│   │   └── rails_jwt_admin/
+│   │       └── install_generator.rb           # Installation generator
+│   ├── rails_jwt_admin/
+│   │   ├── engine.rb                          # Engine definition
+│   │   └── version.rb                         # Gem version
+│   ├── rails_jwt_admin.rb                     # Main entry point
+│   └── vendors/
+│       └── token.rb                           # JWT utilities
+└── test/
+    └── dummy/                                 # Test Rails app
+```
+
+## Development Resources
+- [Rails Engines Guide](https://guides.rubyonrails.org/engines.html)
+- [JWT Ruby Implementation](https://github.com/jwt/ruby-jwt)
+- [Rails Security Guide](https://guides.rubyonrails.org/security.html)
+- [rails_warp Gem](https://github.com/yourusername/rails_warp) - Response normalization
+
+## Usage Notes for Agents
+- **Response Format**: All API responses use `rails_warp` gem's format with `success`, `code`, `message`, and `data` fields
+- **Token Format**: Bearer token in Authorization header: `Authorization: Bearer <token>`
+- **Error Handling**: Use `fail(errors: [], code: 401)` for authentication failures
+- **Success Response**: Use `ok(data: {})` for successful responses
+- **Namespacing**: All models and controllers are under `RailsJwtAdmin` module
+- **Mountable**: Engine is mounted at `/rails_jwt_admin` path
+- **Current User**: Access authenticated user via `@current_user` or `current_user` in controllers

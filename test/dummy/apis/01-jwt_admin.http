@@ -1,9 +1,37 @@
-### get token(login)
-POST http://localhost:3000/rails_jwt_admin/authentication
-content-type: application/json
+### get token(login) - Success
+POST http://localhost:3000/rails_jwt_admin/auth
+Content-Type: application/json
 
-{ "username":"admin", "password": "123123"}
+{
+  "username": "admin",
+  "password": "123123"
+}
 
-### get me
+### get token(login) - Failed (wrong password)
+POST http://localhost:3000/rails_jwt_admin/auth
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "wrongpassword"
+}
+
+### get token(login) - Failed (user not exist)
+POST http://localhost:3000/rails_jwt_admin/auth
+Content-Type: application/json
+
+{
+  "username": "nonexistent",
+  "password": "123123"
+}
+
+### get me - Success (replace YOUR_TOKEN_HERE with actual token from login response)
 GET http://localhost:3000/rails_jwt_admin/me
-Authorization: eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.usIb4_TkXGDommzaBiE6rFjMmvEJmxv5wmt45MqKc9E
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxfQ.usIb4_TkXGDommzaBiE6rFjMmvEJmxv5wmt45MqKc9E
+
+### get me - Failed (invalid token)
+GET http://localhost:3000/rails_jwt_admin/me
+Authorization: Bearer invalid.token.here
+
+### get me - Failed (no token)
+GET http://localhost:3000/rails_jwt_admin/me
