@@ -1,0 +1,22 @@
+{
+  "name": "rails_jwt_admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "JWT-based authentication system for Rails admin panel.",
+  "scripts": {
+    "clean": "rm -rf *.gem",
+    "test": "ruby __tests__/index.rb",
+    "build": "gem build *.gemspec",
+    "pubpush": "gem push *.gem",
+    "unpublish": "gem yank rails_jwt_admin -v '0.1.0'",
+    "release": "release-it"
+  },
+  "keywords": [
+    "api",
+    "json",
+    "rails",
+    "curdable"
+  ],
+  "author": "afeiship",
+  "license": "MIT"
+}

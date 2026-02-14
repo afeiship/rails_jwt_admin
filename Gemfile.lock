@@ -4,7 +4,7 @@ PATH
     rails_jwt_admin (0.1.6)
       bcrypt
       jwt
-      rails (>= 8.1.1)
+      rails (>= 6.0)
       rails_warp
 
 PATH
