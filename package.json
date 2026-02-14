@@ -1,6 +1,6 @@
 {
   "name": "rails_jwt_admin",
-  "version": "1.0.0",
+  "version": "0.1.7",
   "private": true,
   "description": "JWT-based authentication system for Rails admin panel.",
   "scripts": {
